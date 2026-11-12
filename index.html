@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACA Comshop For Intramuros Magallanes - Rates & Summary</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts (Inter & Orbitron for Cyberpunk/Gaming Vibe) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            dark: '#0B0F19',
+                            card: '#151C2C',
+                            border: '#1E293B',
+                            neonBlue: '#00F0FF',
+                            neonGreen: '#00FF66',
+                            neonPurple: '#A855F7',
+                            pink: '#EC4899'
+                        }
+                    },
+                    fontFamily: {
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0B0F19;
+            color: #E2E8F0;
+            font-family: 'Inter', sans-serif;
+        }
+        .glow-text {
+            text-shadow: 0 0 12px rgba(0, 240, 255, 0.6);
+        }
+        .glow-box {
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.15);
+        }
+        .glow-box-green {
+            box-shadow: 0 0 15px rgba(0, 255, 102, 0.2);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0B0F19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1E293B;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00F0FF;
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-12 flex flex-col justify-between">
+
+    <!-- Header Section -->
+    <header class="border-b border-cyber-border bg-cyber-card bg-opacity-80 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3 text-center sm:text-left">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-cyan-500 to-purple-600 flex items-center justify-center text-white text-2xl font-bold shadow-lg shadow-cyan-500/30">
+                    <i class="fa-solid font-orbitron">ACA</i>
+                </div>
+                <div>
+                    <h1 class="text-xl sm:text-2xl font-extrabold tracking-wider font-orbitron text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 glow-text">
+                        ACA COMSHOP
+                    </h1>
+                    <p class="text-xs text-cyan-400 font-semibold tracking-widest flex items-center justify-center sm:justify-start gap-1">
+                        <i class="fa-solid fa-location-dot"></i> INTRAMUROS MAGALLANES
+                    </p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3 bg-cyber-dark px-4 py-2 rounded-lg border border-cyber-border">
+                <span class="inline-block w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span class="text-xs font-mono text-gray-300">RATE: <span class="text-emerald-400 font-bold">₱5 = 15 MINS</span> | <span class="text-cyan-400 font-bold">₱20 = 1 HR</span> | <span class="text-purple-400 font-bold">24 HRS = ₱480</span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 flex-grow w-full">
+        
+        <!-- Top Stats Banner -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-cyber-card border border-cyber-border rounded-xl p-5 glow-box flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Kabuuan ng Nagastos</p>
+                    <h3 class="text-3xl font-bold font-orbitron text-emerald-400 mt-1" id="stat-total-spent">₱0.00</h3>
+                    <p class="text-xs text-gray-500 mt-1">Total spend summary</p>
+                </div>
+                <div class="w-12 h-12 bg-emerald-500/10 border border-emerald-500/30 rounded-lg flex items-center justify-center text-emerald-400 text-xl">
+                    <i class="fa-solid fa-wallet"></i>
+                </div>
+            </div>
+
+            <div class="bg-cyber-card border border-cyber-border rounded-xl p-5 glow-box flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Kabuuang Oras (Minutes)</p>
+                    <h3 class="text-3xl font-bold font-orbitron text-cyan-400 mt-1" id="stat-total-mins">0 mins</h3>
+                    <p class="text-xs text-gray-500 mt-1" id="stat-total-formatted">0 hrs 0 mins</p>
+                </div>
+                <div class="w-12 h-12 bg-cyan-500/10 border border-cyan-500/30 rounded-lg flex items-center justify-center text-cyan-400 text-xl">
+                    <i class="fa-solid fa-clock"></i>
+                </div>
+            </div>
+
+            <div class="bg-cyber-card border border-cyber-border rounded-xl p-5 glow-box flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Kabuuang Sessions</p>
+                    <h3 class="text-3xl font-bold font-orbitron text-purple-400 mt-1" id="stat-total-sessions">0</h3>
+                    <p class="text-xs text-gray-500 mt-1">Nai-record na hulog</p>
+                </div>
+                <div class="w-12 h-12 bg-purple-500/10 border border-purple-500/30 rounded-lg flex items-center justify-center text-purple-400 text-xl">
+                    <i class="fa-solid fa-gamepad"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grid Layout: Table & Interactive Calculator -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- Left Side: Rates Table (Up to 24 Hours) -->
+            <div class="lg:col-span-7 bg-cyber-card border border-cyber-border rounded-xl p-6 glow-box">
+                <div class="flex justify-between items-center pb-4 mb-4 border-b border-cyber-border flex-wrap gap-2">
+                    <div>
+                        <h2 class="text-lg font-bold font-orbitron text-cyan-400 flex items-center gap-2">
+                            <i class="fa-solid fa-table"></i> OPISYAL NA RATES TABLE (15 MINS - 24 HRS)
+                        </h2>
+                        <p class="text-xs text-gray-400">₱5 bawat 15 mins (₱20/Oras) • Hanggang 24 Oras Max</p>
+                    </div>
+                    <span class="text-xs bg-purple-900/40 text-purple-300 border border-purple-500/30 px-3 py-1 rounded-full font-mono">
+                        Max: 24 Hours (₱480)
+                    </span>
+                </div>
+
+                <!-- Table Filter & Search Controls -->
+                <div class="flex flex-wrap gap-2 mb-4">
+                    <button onclick="filterTable('all')" id="btn-filter-all" class="px-3 py-1 text-xs rounded-lg font-mono border border-cyan-500 bg-cyan-500/20 text-cyan-300 transition-all">
+                        Lahat (All)
+                    </button>
+                    <button onclick="filterTable('short')" id="btn-filter-short" class="px-3 py-1 text-xs rounded-lg font-mono border border-cyber-border bg-cyber-dark text-gray-400 hover:text-white transition-all">
+                        15m - 5 Hours
+                    </button>
+                    <button onclick="filterTable('long')" id="btn-filter-long" class="px-3 py-1 text-xs rounded-lg font-mono border border-cyber-border bg-cyber-dark text-gray-400 hover:text-white transition-all">
+                        5 Hours - 12 Hours (Overnight)
+                    </button>
+                    <button onclick="filterTable('marathon')" id="btn-filter-marathon" class="px-3 py-1 text-xs rounded-lg font-mono border border-cyber-border bg-cyber-dark text-gray-400 hover:text-white transition-all">
+                        12 Hours - 24 Hours
+                    </button>
+                    <button onclick="filterTable('hourly')" id="btn-filter-hourly" class="px-3 py-1 text-xs rounded-lg font-mono border border-cyber-border bg-cyber-dark text-purple-400 hover:text-purple-300 transition-all">
+                        ⭐ Full Hours Only
+                    </button>
+                </div>
+
+                <!-- Responsive Table Wrapper -->
+                <div class="overflow-x-auto max-h-[520px] overflow-y-auto pr-1">
+                    <table class="w-full text-left border-collapse">
+                        <thead class="sticky top-0 bg-cyber-dark text-cyan-400 text-xs font-semibold uppercase tracking-wider border-b border-cyber-border">
+                            <tr>
+                                <th class="py-3 px-4">Halaga (PHP)</th>
+                                <th class="py-3 px-4">Oras (Minutes)</th>
+                                <th class="py-3 px-4">Kabuuan (Hours & Mins)</th>
+                                <th class="py-3 px-4 text-center">Aksyon</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rateTableBody" class="divide-y divide-cyber-border text-sm text-gray-300 font-mono">
+                            <!-- JS populated rows up to 24 hours -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Right Side: Interactive Calculator & Session Logger -->
+            <div class="lg:col-span-5 flex flex-col gap-6">
+                
+                <!-- Quick Calculator Box -->
+                <div class="bg-cyber-card border border-cyber-border rounded-xl p-6 glow-box-green">
+                    <h2 class="text-lg font-bold font-orbitron text-emerald-400 mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-calculator"></i> QUICK CALCULATOR & LOG
+                    </h2>
+                    <p class="text-xs text-gray-400 mb-5">Mag-enter ng halaga (₱) hanggang ₱480 para makuha ang katumbas na oras hanggang 24 Hours.</p>
+
+                    <form id="addSessionForm" onsubmit="event.preventDefault(); addCustomSession();" class="space-y-4">
+                        <div>
+                            <label for="customAmount" class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">
+                                Ipasok ang Ilang Pesos (₱):
+                            </label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-emerald-400 font-bold font-mono text-lg">₱</span>
+                                <input type="number" id="customAmount" min="5" step="5" max="480" value="10"
+                                    class="w-full bg-cyber-dark border border-cyber-border focus:border-emerald-400 rounded-lg py-3 pl-8 pr-4 text-white font-mono text-lg focus:outline-none transition-colors"
+                                    placeholder="Hal. 5, 10, 50, 240, 480" oninput="updateCalculatorPreview()">
+                            </div>
+                        </div>
+
+                        <!-- Computed Output Preview -->
+                        <div class="bg-cyber-dark/80 border border-cyber-border rounded-lg p-4 flex justify-between items-center">
+                            <div>
+                                <span class="text-xs text-gray-400 block">Katumbas na Oras:</span>
+                                <span class="text-lg font-bold font-mono text-cyan-400" id="previewMins">30 mins</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-xs text-gray-400 block">Duration Format:</span>
+                                <span class="text-sm font-semibold font-mono text-purple-300" id="previewFormatted">0 hrs 30 mins</span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full py-3 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-cyber-dark font-orbitron font-bold rounded-lg shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-plus-circle"></i> IDAGDAG SA SUMMARY LOG
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Session History Log / Summary list -->
+                <div class="bg-cyber-card border border-cyber-border rounded-xl p-6 glow-box flex-grow flex flex-col">
+                    <div class="flex justify-between items-center mb-4 pb-2 border-b border-cyber-border">
+                        <h2 class="text-sm font-bold font-orbitron text-purple-400 flex items-center gap-2">
+                            <i class="fa-solid fa-list-check"></i> SUMMARY OF SESSIONS
+                        </h2>
+                        <button onclick="clearAllSessions()" class="text-xs text-rose-400 hover:text-rose-300 underline font-mono flex items-center gap-1">
+                            <i class="fa-solid fa-trash"></i> Reset All
+                        </button>
+                    </div>
+
+                    <div class="overflow-y-auto max-h-[220px] flex-grow pr-1" id="sessionListContainer">
+                        <ul id="sessionList" class="space-y-2 text-sm font-mono">
+                            <!-- Session Logs will appear here dynamically -->
+                        </ul>
+                        <div id="emptyLogState" class="text-center py-8 text-gray-500 text-xs">
+                            <i class="fa-solid fa-receipt text-3xl mb-2 opacity-30"></i>
+                            <p>Wala pang nare-record na oras/hulog.</p>
+                            <p class="text-[10px] text-gray-600 mt-1">Pumili sa rates table sa kaliwa o gumamit ng calculator.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-12 border-t border-cyber-border py-4 text-center text-xs text-gray-500">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
+            <p>© ACA Comshop For Intramuros Magallanes. All rights reserved.</p>
+            <p class="font-mono text-cyan-500">Standard Computer Rental Rates: ₱5 / 15 Mins</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Array to store logged play sessions
+        let sessions = [];
+        let currentFilter = 'all';
+
+        // Helper function to format minutes into Hours and Minutes string
+        function formatDuration(totalMins) {
+            const hours = Math.floor(totalMins / 60);
+            const mins = totalMins % 60;
+            
+            if (hours === 0) {
+                return `${mins} mins`;
+            } else if (mins === 0) {
+                return `${hours} hr${hours > 1 ? 's' : ''}`;
+            } else {
+                return `${hours} hr${hours > 1 ? 's' : ''} ${mins} mins`;
+            }
+        }
+
+        // Generate Rate Table from ₱5 (15 mins) up to 24 hours (1440 mins / ₱480)
+        function generateRateTable() {
+            const tbody = document.getElementById('rateTableBody');
+            tbody.innerHTML = '';
+
+            const ratePer15Min = 5; // 5 pesos = 15 mins
+            const maxMinutes = 1440; // 24 hours max = 1440 mins
+
+            for (let mins = 15; mins <= maxMinutes; mins += 15) {
+                const amount = (mins / 15) * ratePer15Min;
+                const durationFormatted = formatDuration(mins);
+                const isHourly = mins % 60 === 0;
+                const hours = mins / 60;
+
+                // Filtering logic
+                if (currentFilter === 'short' && mins > 300) continue;
+                if (currentFilter === 'long' && (mins < 300 || mins > 720)) continue;
+                if (currentFilter === 'marathon' && mins < 720) continue;
+                if (currentFilter === 'hourly' && !isHourly) continue;
+
+                const tr = document.createElement('tr');
+                let rowBg = 'hover:bg-cyber-border/40 transition-colors';
+                
+                // Special Highlight Badges for major milestones
+                let badgeHTML = '';
+                if (hours === 12) {
+                    rowBg += ' bg-purple-950/40 font-bold border-l-4 border-purple-500';
+                    badgeHTML = '<span class="text-[10px] bg-purple-500 text-white font-bold px-2 py-0.5 rounded ml-1">12H OVERNIGHT</span>';
+                } else if (hours === 24) {
+                    rowBg += ' bg-pink-950/50 font-bold border-l-4 border-pink-500';
+                    badgeHTML = '<span class="text-[10px] bg-pink-500 text-white font-bold px-2 py-0.5 rounded ml-1">24H FULL DAY</span>';
+                } else if (hours === 5) {
+                    rowBg += ' bg-cyan-950/30 font-bold border-l-4 border-cyan-400';
+                    badgeHTML = '<span class="text-[10px] bg-cyan-500 text-black font-bold px-1.5 py-0.5 rounded ml-1">5 HOURS</span>';
+                } else if (isHourly) {
+                    rowBg += ' bg-cyan-950/20 font-semibold';
+                    badgeHTML = '<span class="text-[10px] bg-cyan-500/20 text-cyan-300 px-1.5 py-0.5 rounded ml-1">FULL HOUR</span>';
+                }
+
+                tr.className = rowBg;
+                
+                tr.innerHTML = `
+                    <td class="py-3 px-4 text-emerald-400 font-bold">₱${amount}</td>
+                    <td class="py-3 px-4">${mins} mins</td>
+                    <td class="py-3 px-4 ${isHourly ? 'text-cyan-300' : 'text-gray-300'}">
+                        ${durationFormatted} ${badgeHTML}
+                    </td>
+                    <td class="py-3 px-4 text-center">
+                        <button onclick="addSessionFromTable(${amount}, ${mins})" class="px-3 py-1 bg-cyan-500/10 hover:bg-cyan-500/30 text-cyan-400 border border-cyan-500/30 rounded text-xs transition-all flex items-center justify-center gap-1 mx-auto">
+                            <i class="fa-solid fa-plus text-[10px]"></i> Idagdag
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            }
+        }
+
+        // Handle category filters for rate table
+        function filterTable(filterType) {
+            currentFilter = filterType;
+            
+            // Active state styling for buttons
+            const btnIds = ['all', 'short', 'long', 'marathon', 'hourly'];
+            btnIds.forEach(id => {
+                const btn = document.getElementById(`btn-filter-${id}`);
+                if (id === filterType) {
+                    btn.className = 'px-3 py-1 text-xs rounded-lg font-mono border border-cyan-500 bg-cyan-500/20 text-cyan-300 transition-all';
+                } else {
+                    btn.className = 'px-3 py-1 text-xs rounded-lg font-mono border border-cyber-border bg-cyber-dark text-gray-400 hover:text-white transition-all';
+                }
+            });
+
+            generateRateTable();
+        }
+
+        // Live calculator preview updates
+        function updateCalculatorPreview() {
+            const amountInput = document.getElementById('customAmount');
+            let amount = parseFloat(amountInput.value) || 0;
+
+            if (amount > 480) {
+                amount = 480;
+                amountInput.value = 480;
+            }
+
+            // Calculate minutes based on ₱5 = 15 mins standard rate
+            const mins = Math.floor(amount / 5) * 15;
+            
+            document.getElementById('previewMins').textContent = `${mins} mins`;
+            document.getElementById('previewFormatted').textContent = formatDuration(mins);
+        }
+
+        // Add session from Table button
+        function addSessionFromTable(amount, mins) {
+            sessions.push({ amount, mins, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) });
+            updateSummaryUI();
+        }
+
+        // Add custom session from calculator input
+        function addCustomSession() {
+            const amountInput = document.getElementById('customAmount');
+            let amount = parseFloat(amountInput.value);
+
+            if (!amount || amount < 5) {
+                amount = 5;
+                amountInput.value = 5;
+            } else if (amount > 480) {
+                amount = 480;
+                amountInput.value = 480;
+            }
+
+            const mins = Math.floor(amount / 5) * 15;
+            sessions.push({ amount, mins, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) });
+            updateSummaryUI();
+        }
+
+        // Remove single session item
+        function removeSession(index) {
+            sessions.splice(index, 1);
+            updateSummaryUI();
+        }
+
+        // Clear all sessions
+        function clearAllSessions() {
+            if (sessions.length === 0) return;
+            sessions = [];
+            updateSummaryUI();
+        }
+
+        // Update Stats and Session Log UI
+        function updateSummaryUI() {
+            const listEl = document.getElementById('sessionList');
+            const emptyLogState = document.getElementById('emptyLogState');
+            
+            listEl.innerHTML = '';
+
+            let totalSpent = 0;
+            let totalMins = 0;
+
+            if (sessions.length === 0) {
+                emptyLogState.classList.remove('hidden');
+            } else {
+                emptyLogState.classList.add('hidden');
+                
+                sessions.forEach((session, index) => {
+                    totalSpent += session.amount;
+                    totalMins += session.mins;
+
+                    const li = document.createElement('li');
+                    li.className = "flex justify-between items-center bg-cyber-dark p-3 rounded-lg border border-cyber-border hover:border-purple-500/40 transition-colors";
+                    li.innerHTML = `
+                        <div class="flex items-center gap-3">
+                            <span class="text-xs text-gray-500">#${index + 1}</span>
+                            <div>
+                                <span class="text-emerald-400 font-bold">₱${session.amount}</span>
+                                <span class="text-gray-400 text-xs ml-2">(${session.mins} mins - ${formatDuration(session.mins)})</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] text-gray-500 font-sans">${session.time}</span>
+                            <button onclick="removeSession(${index})" class="text-rose-400 hover:text-rose-300 p-1 rounded">
+                                <i class="fa-solid fa-times"></i>
+                            </button>
+                        </div>
+                    `;
+                    listEl.appendChild(li);
+                });
+            }
+
+            // Update Header Stats
+            document.getElementById('stat-total-spent').textContent = `₱${totalSpent.toFixed(2)}`;
+            document.getElementById('stat-total-mins').textContent = `${totalMins} mins`;
+            document.getElementById('stat-total-formatted').textContent = formatDuration(totalMins);
+            document.getElementById('stat-total-sessions').textContent = sessions.length;
+        }
+
+        // Initialize page elements
+        window.onload = function() {
+            generateRateTable();
+            updateCalculatorPreview();
+        };
+    </script>
+</body>
+</html>
